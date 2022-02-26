@@ -1,5 +1,7 @@
 # pihole-cloudflared
 
+This will run both Pi-hole and `cloudflared` at the same time.
+
 ## First-run
 
 Run Pi-hole in Docker Compose.
