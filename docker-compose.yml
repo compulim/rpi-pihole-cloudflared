@@ -21,8 +21,7 @@ services:
 
   cloudflared:
     image: cloudflare/cloudflared:2022.2.2
-    command:
-      ['proxy-dns', '--port 5053', '--upstream https://1.1.1.1/dns-query', '--upstream https://1.0.0.1/dns-query']
+    command: 'proxy-dns --port 5053 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query'
     expose:
       - '5053/tcp'
     networks:
@@ -36,6 +35,6 @@ networks:
   pi-hole:
     driver: bridge
     ipam:
-     config:
-       - subnet: 10.53.0.0/16
-         gateway: 10.53.0.1
+      config:
+        - subnet: 10.53.0.0/16
+          gateway: 10.53.0.1
