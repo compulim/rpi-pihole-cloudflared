@@ -1,10 +1,12 @@
 # pihole-cloudflared
 
-This will run both Pi-hole and `cloudflared` at the same time.
+This will run both [Pi-hole](https://pi-hole.net/) and [`cloudflared`](https://hub.docker.com/r/cloudflare/cloudflared) at the same time.
+
+`cloudflared` uses DNS-over-HTTPS, so no one could peak into what you resolved.
 
 ## First-run
 
-Run Pi-hole in Docker Compose.
+Run [Pi-hole](https://pi-hole.net/) in Docker Compose.
 
 ```sh
 docker-compose up -d
@@ -22,6 +24,11 @@ By default, Gravity Database will be updated on boot. To update manually, while 
 ```sh
 docker-compose exec pi-hole pihole updateGravity
 ```
+
+## To-do
+
+- Weekly CRON job to restart and pull a new version of both images. As Pi-hole is getting restarted, the Gravity Database should also get updated
+- Configuring a Kubernetes cluster to run 2 replicas
 
 ## References
 
