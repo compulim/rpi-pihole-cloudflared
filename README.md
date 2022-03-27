@@ -64,7 +64,7 @@ To update Pi-hole, modify `/etc/crontab` to reboot, or restart the Docker Compos
 To update password, run:
 
 ```sh
-docker-compose exec -it pi-hole pihole -a -p
+docker-compose exec pihole pihole -a -p
 ```
 
 ### Update Gravity Database
