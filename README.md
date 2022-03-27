@@ -6,22 +6,25 @@ This will run both [Pi-hole](https://pi-hole.net/) and [`cloudflared`](https://h
 
 ## Install Docker and Docker Compose
 
-### Install Docker
+Note: we will install Docker Compose from PIP3 because it is newer than `apt`.
 
 ```sh
+# Install Docker
+
 curl -sSL https://get.docker.com | sh
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo usermod -aG docker pi
-sudo reboot # or restart SSH
-```
 
-### Install Docker Compose
+# Install Docker Compose
 
-```sh
 sudo apt update
 sudo apt install python3-pip
 sudo pip3 install docker-compose
+
+# Reboot
+
+sudo reboot
 ```
 
 ## Run manually
@@ -29,17 +32,23 @@ sudo pip3 install docker-compose
 Run [Pi-hole](https://pi-hole.net/) in Docker Compose.
 
 ```sh
-docker-compose up -d
+docker-compose up --detach
 docker-compose logs # to see the default random password
 ```
 
-Pi-hole DNS server will be hosted at tcp://localhost:53/.
-
 Then, navigate to http://localhost/ to go to the admin dashboard.
+
+To test Pi-hole as DNS server:
+
+```sh
+sudo apt install dnsutils
+
+dig github.com @localhost
+```
 
 ## Run as a service
 
-Modify pihole.service to point to the correct directory
+Modify `pihole.service` to point to the correct directory.
 
 ```sh
 chmod +x service
@@ -48,21 +57,14 @@ sudo systemctl enable pihole.service
 sudo systemctl start pihole
 ```
 
-## How to test DNS server
-
-Pi-hole should be published on `localhost:53`.
-
-```sh
-sudo apt install dnsutils
-dig github.com @localhost
-```
+To update Pi-hole, modify `/etc/crontab` to reboot, or restart the Docker Compose service on a schedule. When the service is started, it will pull latest [`pihole/pihole`](https://hub.docker.com/r/pihole/pihole) image and rebuild `cloudflared` with latest versions.
 
 ### Change password
 
 To update password, run:
 
 ```sh
-docker-compose exec -it pi-hole pihole -a -p
+docker-compose exec pihole pihole -a -p
 ```
 
 ### Update Gravity Database
@@ -72,11 +74,6 @@ By default, Gravity Database will be updated on boot. To update manually, while 
 ```sh
 docker-compose exec pi-hole pihole updateGravity
 ```
-
-## To-do
-
-- Weekly CRON job to restart and pull a new version of both images. As Pi-hole is getting restarted, the Gravity Database should also get updated
-- Configuring a Kubernetes cluster to run 2 replicas
 
 ## References
 
