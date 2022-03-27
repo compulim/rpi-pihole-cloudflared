@@ -22,6 +22,10 @@ sudo apt update
 sudo apt install python3-pip
 sudo pip3 install docker-compose
 
+# Use localhost as DNS
+
+sudo nano /etc/resolvconf.conf # to uncomment name_servers=127.0.0.1
+
 # Reboot
 
 sudo reboot
@@ -75,7 +79,7 @@ sudo systemctl enable pihole
 sudo systemctl start pihole
 ```
 
-To update Pi-hole, modify `/etc/crontab` to reboot, or restart the Docker Compose service on a schedule. When the service is started, it will pull latest [`pihole/pihole`](https://hub.docker.com/r/pihole/pihole) image and rebuild `cloudflared` with latest versions.
+To update Pi-hole, modify `/etc/crontab` to reboot, or restart the Docker Compose service on a schedule. When the service is started, it will pull the latest [`pihole/pihole`](https://hub.docker.com/r/pihole/pihole) image and rebuild `cloudflared` with latest version.
 
 ## References
 
