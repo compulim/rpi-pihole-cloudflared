@@ -36,15 +36,33 @@ docker-compose up --detach
 docker-compose logs # to see the default random password
 ```
 
-Then, navigate to http://localhost/ to go to the admin dashboard.
+### Update password
 
-To test Pi-hole as DNS server:
+```sh
+docker-compose exec pihole pihole -a -p
+```
+
+### Test DNS server
+
+You will need `dig` which can be installed from `dnsutils`.
 
 ```sh
 sudo apt install dnsutils
 
 dig github.com @localhost
 ```
+
+### Update Gravity Database
+
+Although Gravity Database is updated on Pi-hole start, to update-on-demand, run:
+
+```sh
+docker-compose exec pihole pihole updateGravity
+```
+
+### Sync configuration between primary and secondary Pi-hole
+
+There is a `sync` file which help synchronizing configuration between Pi-holes thru `scp`. Please make sure SSH keys are properly set through `~/.ssh/authorized_keys`.
 
 ## Run as a service
 
@@ -53,27 +71,11 @@ Modify `pihole.service` to point to the correct directory.
 ```sh
 chmod +x service
 sudo ln -s /home/pi/repos/pihole/pihole.service /etc/systemd/system/pihole.service
-sudo systemctl enable pihole.service
+sudo systemctl enable pihole
 sudo systemctl start pihole
 ```
 
 To update Pi-hole, modify `/etc/crontab` to reboot, or restart the Docker Compose service on a schedule. When the service is started, it will pull latest [`pihole/pihole`](https://hub.docker.com/r/pihole/pihole) image and rebuild `cloudflared` with latest versions.
-
-### Change password
-
-To update password, run:
-
-```sh
-docker-compose exec pihole pihole -a -p
-```
-
-### Update Gravity Database
-
-By default, Gravity Database will be updated on boot. To update manually, while the container is running, run:
-
-```sh
-docker-compose exec pi-hole pihole updateGravity
-```
 
 ## References
 
