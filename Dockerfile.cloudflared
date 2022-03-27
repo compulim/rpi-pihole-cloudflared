@@ -6,7 +6,14 @@ EXPOSE 53
 ENTRYPOINT cloudflared proxy-dns --address 0.0.0.0 --metrics localhost:40000 --upstream $PRIMARY_DNS --upstream $SECONDARY_DNS
 HEALTHCHECK CMD curl -f http://localhost:40000/metrics || exit 1
 
-RUN apt-get update && apt-get install --yes curl
-RUN curl -LO https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb
+# Just in case if no DNS is available (say, both primary and secondary were down at the same time),
+# we will not be able to download cloudflared from GitHub, then use the cached version to bootstrap the server.
+ADD external/cloudflared-linux-arm64.deb .
+
+RUN \
+  apt-get update && \
+  apt-get install --yes curl && \
+  curl -fLO https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb || exit 0
+
 RUN apt-get install ./cloudflared-linux-arm64.deb
 RUN cloudflared --version

@@ -22,9 +22,10 @@ sudo apt update
 sudo apt install python3-pip
 sudo pip3 install docker-compose
 
-# Use localhost as DNS
+# Cache a version of cloudflared just in case if no DNS is available
 
-sudo nano /etc/resolvconf.conf # to uncomment name_servers=127.0.0.1
+cd external
+curl -LO https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb
 
 # Reboot
 
