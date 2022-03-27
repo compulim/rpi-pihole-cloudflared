@@ -48,6 +48,15 @@ sudo systemctl enable pihole.service
 sudo systemctl start pihole
 ```
 
+## How to test DNS server
+
+Pi-hole should be published on `localhost:53`.
+
+```sh
+sudo apt install dnsutils
+dig github.com @localhost
+```
+
 ### Change password
 
 To update password, run:
