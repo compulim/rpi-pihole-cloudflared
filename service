@@ -5,6 +5,7 @@ start() {
     cd ${DIR}
     docker pull pihole/pihole
     docker-compose rm
+    docker rmi pihole_cloudflared
     docker-compose up --build --detach
 }
 
