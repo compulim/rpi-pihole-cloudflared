@@ -3,4 +3,5 @@
 scp -i /home/pi/.ssh/id_rsa -r pi@dns1.local:/home/pi/repos/pihole/etc-cloudflared/ .
 scp -i /home/pi/.ssh/id_rsa -r pi@dns1.local:/home/pi/repos/pihole/etc-dnsmasq.d/ .
 scp -i /home/pi/.ssh/id_rsa -r pi@dns1.local:/home/pi/repos/pihole/etc-pihole/ .
-docker-compose restart pihole
+
+docker-compose exec pihole pihole restartdns
