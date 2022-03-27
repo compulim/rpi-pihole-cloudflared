@@ -23,6 +23,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.cloudflared
+    environment:
+      PRIMARY_DNS: https://1.1.1.1/dns-query
+      SECONDARY_DNS: https://1.0.0.1/dns-query
     expose:
       - '53/tcp'
     networks:
