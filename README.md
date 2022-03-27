@@ -4,7 +4,27 @@ This will run both [Pi-hole](https://pi-hole.net/) and [`cloudflared`](https://h
 
 `cloudflared` uses DNS-over-HTTPS, so no one could peak into what you resolved.
 
-## First-run
+## Install Docker and Docker Compose
+
+### Install Docker
+
+```sh
+curl -sSL https://get.docker.com | sh
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker pi
+sudo reboot # or restart SSH
+```
+
+### Install Docker Compose
+
+```sh
+sudo apt update
+sudo apt install python3-pip
+sudo pip3 install docker-compose
+```
+
+## Run manually
 
 Run [Pi-hole](https://pi-hole.net/) in Docker Compose.
 
@@ -16,6 +36,25 @@ docker-compose logs # to see the default random password
 Pi-hole DNS server will be hosted at tcp://localhost:53/.
 
 Then, navigate to http://localhost/ to go to the admin dashboard.
+
+## Run as a service
+
+Modify pihole.service to point to the correct directory
+
+```sh
+chmod +x service
+sudo ln -s /home/pi/repos/pihole/pihole.service /etc/systemd/system/pihole.service
+sudo systemctl enable pihole.service
+sudo systemctl start pihole
+```
+
+### Change password
+
+To update password, run:
+
+```sh
+docker-compose exec -it pi-hole pihole -a -p
+```
 
 ### Update Gravity Database
 

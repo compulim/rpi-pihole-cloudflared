@@ -1,0 +1,10 @@
+[Unit]
+Description=pihole
+
+[Service]
+ExecStart=/home/pi/repos/pihole/service start
+ExecStop=/home/pi/repos/pihole/service stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+FROM debian
+EXPOSE 53
+ENTRYPOINT ["cloudflared", "proxy-dns --port 53 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query"]
+
+RUN apt-get update && apt-get install --yes curl
+RUN curl -LO https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb
+RUN apt-get install ./cloudflared-linux-arm64.deb
+RUN cloudflared --version
