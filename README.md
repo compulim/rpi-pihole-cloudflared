@@ -57,6 +57,8 @@ sudo systemctl enable pihole.service
 sudo systemctl start pihole
 ```
 
+To update Pi-hole, modify `/etc/crontab` to reboot, or restart the Docker Compose service on a schedule. When the service is started, it will pull latest [`pihole/pihole`](https://hub.docker.com/r/pihole/pihole) image and rebuild `cloudflared` with latest versions.
+
 ### Change password
 
 To update password, run:
@@ -72,11 +74,6 @@ By default, Gravity Database will be updated on boot. To update manually, while 
 ```sh
 docker-compose exec pi-hole pihole updateGravity
 ```
-
-## To-do
-
-- Weekly CRON job to restart and pull a new version of both images. As Pi-hole is getting restarted, the Gravity Database should also get updated
-- Configuring a Kubernetes cluster to run 2 replicas
 
 ## References
 
