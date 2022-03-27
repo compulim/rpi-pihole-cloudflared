@@ -3,7 +3,8 @@ ENV PRIMARY_DNS=https://1.1.1.1/dns-query
 ENV SECONDARY_DNS=https://1.0.0.1/dns-query
 
 EXPOSE 53
-ENTRYPOINT cloudflared proxy-dns --address 0.0.0.0 --upstream $PRIMARY_DNS --upstream $SECONDARY_DNS
+ENTRYPOINT cloudflared proxy-dns --address 0.0.0.0 --metrics localhost:40000 --upstream $PRIMARY_DNS --upstream $SECONDARY_DNS
+HEALTHCHECK CMD curl -f http://localhost:40000/metrics || exit 1
 
 RUN apt-get update && apt-get install --yes curl
 RUN curl -LO https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb
