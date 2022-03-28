@@ -7,6 +7,7 @@ start() {
     docker pull pihole/pihole
     docker-compose rm
     docker rmi pihole_cloudflared
+    docker image prune --force
     docker-compose up --build --detach
 }
 
