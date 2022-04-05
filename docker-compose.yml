@@ -19,6 +19,7 @@ services:
       pihole:
         ipv4_address: 10.53.0.2
     restart: unless-stopped
+    shm_size: '2g'
     # Volumes store your data between container upgrades
     volumes:
       - ./etc-pihole:/etc/pihole
