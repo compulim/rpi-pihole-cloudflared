@@ -2,13 +2,25 @@
 declare -r DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 start() {
+    cd ${DIR}/external
+    curl -fLO https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb
+
     cd ${DIR}
-    docker pull debian
-    docker pull pihole/pihole
-    docker-compose rm
-    docker rmi pihole_cloudflared
+
+    # "pull" could fail if no DNS resolvers are ready.
+    # But we should already have existing images which pulled during our first boot.
+    docker-compose pull --ignore-pull-failures
+
+    # Remove existing containers for all stopped instances.
+    docker-compose rm --force
+
+    # "build" could fail if no DNS resolvers are ready.
+    # But it should be fine as we should still have a previously-built image.
+    docker-compose build
+    docker-compose up --detach
+
+    # Housekeeping after the service is up.
     docker image prune --force
-    docker-compose up --build --detach
 }
 
 stop() {
