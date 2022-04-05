@@ -4,6 +4,9 @@ services:
   pihole:
     cap_add:
       - NET_ADMIN
+    dns:
+      - 10.53.0.3
+    hostname: pihole
     image: pihole/pihole:latest
     ports:
       - 53:53/tcp
