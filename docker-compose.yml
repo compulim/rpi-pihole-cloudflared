@@ -5,6 +5,10 @@ services:
     cap_add:
       - NET_ADMIN
     dns:
+      # We need to specifically set DNS here, otherwise, "update gravity" seems will fail.
+
+      # This needs to be an IP address, otherwise, lookup would fail.
+      # It is working when running "docker-compose exec pihole dig github.com" return some results.
       - 10.53.0.3
     hostname: pihole
     image: pihole/pihole:latest
@@ -13,7 +17,7 @@ services:
       - 53:53/udp
       - 80:80/tcp
     environment:
-      PIHOLE_DNS_: 10.53.0.3#53
+      PIHOLE_DNS_: cloudflared#53
       TZ: America/Los_Angeles
     networks:
       pihole:
