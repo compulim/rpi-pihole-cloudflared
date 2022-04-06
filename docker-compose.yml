@@ -16,9 +16,9 @@ services:
       - 53:53/tcp
       - 53:53/udp
       - 80:80/tcp
+    env_file: .env
     environment:
       PIHOLE_DNS_: cloudflared#53
-      TZ: America/Los_Angeles
     networks:
       pihole:
         ipv4_address: 10.53.0.2

@@ -32,6 +32,10 @@ curl -LO https://github.com/cloudflare/cloudflared/releases/latest/download/clou
 sudo reboot
 ```
 
+## Configure Pi-hole
+
+Update the `.env` file with corresponding settings.
+
 ## Run manually
 
 Run [Pi-hole](https://pi-hole.net/) in Docker Compose.
