@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-scp -i /home/pi/.ssh/id_rsa -r pi@dns1.localdomain:/home/pi/repos/pihole/etc-cloudflared/ .
-scp -i /home/pi/.ssh/id_rsa -r pi@dns1.localdomain:/home/pi/repos/pihole/etc-dnsmasq.d/ .
-scp -i /home/pi/.ssh/id_rsa -r pi@dns1.localdomain:/home/pi/repos/pihole/etc-pihole/ .
+scp -i /home/pi/.ssh/id_rsa -r pi@dns1.localdomain:/home/pi/repos/pihole/etc/cloudflared/ .
+scp -i /home/pi/.ssh/id_rsa -r pi@dns1.localdomain:/home/pi/repos/pihole/etc/dnsmasq.d/ .
+scp -i /home/pi/.ssh/id_rsa -r pi@dns1.localdomain:/home/pi/repos/pihole/etc/pihole/ .
 
 docker-compose exec pihole pihole restartdns
