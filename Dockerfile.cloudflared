@@ -14,7 +14,7 @@ ADD external/cloudflared-linux-arm64.deb .
 # ---------------------------------------------------------------------------------------------------------
 
 # "ca-certificates" is required for "cloudflared".
-RUN apt-get update && apt-get install --yes ca-certificates ./cloudflared-linux-arm64.deb
+RUN apt-get update && apt-get install --yes ca-certificates curl ./cloudflared-linux-arm64.deb
 
 # Prints the version of "cloudflared".
 RUN cloudflared --version
