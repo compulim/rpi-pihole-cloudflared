@@ -48,7 +48,9 @@ services:
       - ./etc/cloudflared:/etc/cloudflared
 
   autoheal:
-    image: willfarrell/autoheal:latest
+    # 2026-04-02: autoheal:latest is currently broken, incomplete script at /docker_entrypoint
+    # image: willfarrell/autoheal:latest
+    image: willfarrell/autoheal:1.2.0
     tty: true
     container_name: autoheal
     restart: always
