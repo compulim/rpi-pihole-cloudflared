@@ -16,39 +16,35 @@ sudo systemctl enable docker
 sudo systemctl start docker
 sudo usermod -aG docker pi
 
-# Install Docker Compose
-
-sudo apt update
-sudo apt install python3-pip
-sudo pip3 install docker-compose
-
 # Cache a version of cloudflared just in case if no DNS is available
 
 cd external
 curl -LO https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-arm64.deb
 
-# Reboot
+# Reboot needed
 
 sudo reboot
 ```
 
+<!--
 ## Configure Pi-hole
 
 Update the `.env` file with corresponding settings.
+-->
 
 ## Run manually
 
 Run [Pi-hole](https://pi-hole.net/) in Docker Compose.
 
 ```sh
-docker-compose up --detach
-docker-compose logs # to see the default random password
+docker compose up --detach
+docker compose logs # to see the default random password
 ```
 
 ### Update password
 
 ```sh
-docker-compose exec pihole pihole -a -p
+docker compose exec pihole pihole -a -p
 ```
 
 ### Test DNS server
@@ -84,7 +80,7 @@ sudo systemctl enable pihole
 sudo systemctl start pihole
 ```
 
-To update Pi-hole, modify `/etc/crontab` to reboot, or restart the Docker Compose service on a schedule. When the service is started, it will pull the latest [`pihole/pihole`](https://hub.docker.com/r/pihole/pihole) image and rebuild `cloudflared` with latest version.
+To update Pi-hole, run `sudo crontab -e` and reboot, or restart the Docker Compose service on a schedule. When the service is started, it will pull the latest [`pihole/pihole`](https://hub.docker.com/r/pihole/pihole) image and rebuild `cloudflared` with latest version.
 
 ## References
 
