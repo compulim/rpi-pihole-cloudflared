@@ -67,6 +67,12 @@ docker-compose exec pihole pihole updateGravity
 
 ### Sync configuration between primary and secondary Pi-hole
 
+Generate SSH key.
+
+```sh
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa
+```
+
 There is a `sync` file which help synchronizing configuration between Pi-holes thru `scp`. Please make sure SSH keys are properly set through `~/.ssh/authorized_keys`.
 
 ## Run as a service
